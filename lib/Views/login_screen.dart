@@ -4,7 +4,6 @@ import 'package:whats_app/Views/chat_screen.dart';
 import 'package:whats_app/Widgets/custom_button.dart';
 import 'package:whats_app/Widgets/custom_text.dart';
 import 'package:whats_app/Widgets/custom_text_form_feild.dart';
-import 'package:whats_app/Widgets/loading_indicator.dart';
 import 'package:whats_app/Widgets/snack_bar.dart';
 import 'package:whats_app/constants.dart';
 
@@ -56,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () async {
                     try {
                       await UserLogin();
-                      Navigator.pushNamed(context, ChatScreen.id);
+                      Navigator.pushNamed(context, ChatScreen.id,arguments: email);
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'user-not-found') {
                         if (context.mounted) {

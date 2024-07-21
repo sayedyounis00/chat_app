@@ -1,29 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:whats_app/Models/message_model.dart';
+import 'package:whats_app/Widgets/loading_indicator.dart';
 import 'package:whats_app/Widgets/sending_form.dart';
 import 'package:whats_app/Widgets/user_bar.dart';
 import 'package:whats_app/Widgets/user_chat_bubble.dart';
+import 'package:whats_app/Widgets/user_two_message_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key});
+  ChatScreen({
+    super.key,
+  });
   static String id = 'ChatScreen';
   final TextEditingController controller = TextEditingController();
-  final String dateCreated=DateFormat('h:mm:ss a').format(DateTime.now());
-
   @override
   Widget build(BuildContext context) {
+    String userEmail = ModalRoute.of(context)!.settings.arguments as String;
     CollectionReference messages =
         FirebaseFirestore.instance.collection('messages');
+          final ScrollController controllere = ScrollController();
+
 
     return StreamBuilder<QuerySnapshot>(
-        stream:  messages.orderBy('createdAt',descending: true).snapshots(),
+        stream: messages.orderBy('createdAt', descending: true).snapshots(),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
-            List<MessageModel> messageList = [
-            ];
-            for (int i = 0; i <snapshots.data!.docs.length; i++) {
+            List<MessageModel> messageList = [];
+            for (int i = 0; i < snapshots.data!.docs.length; i++) {
               messageList.add(MessageModel.fromjson(snapshots.data!.docs[i]));
             }
             return SafeArea(
@@ -35,11 +38,15 @@ class ChatScreen extends StatelessWidget {
                     const UserBar(),
                     Expanded(
                       child: ListView.builder(
+                        reverse: true,
                         itemCount: messageList.length,
                         itemBuilder: (context, index) {
-                          return UserChatBubble(
-                            userMessage: messageList[index],
-                          );
+                          return messageList[index].id == userEmail
+                              ? UserChatBubble(
+                                  userMessage: messageList[index],
+                                )
+                              : UserTwoChatBubble(
+                                  userMessage: messageList[index]);
                         },
                       ),
                     ),
@@ -47,11 +54,17 @@ class ChatScreen extends StatelessWidget {
                       onSubmitted: (message) {
                         messages.add({
                           'message': message,
-                          'createdAt':dateCreated,
+                          'createdAt': DateTime.now(),
+                          'email': userEmail,
                         }).then(
                           (value) => message,
                         );
+
                         controller.clear();
+                        controllere.animateTo(
+                            controllere.position.minScrollExtent,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.easeIn);
                       },
                       controller: controller,
                     )
@@ -60,8 +73,7 @@ class ChatScreen extends StatelessWidget {
               ),
             );
           } else {
-            return const Text('Error');
-          
+            return const LoadingIndicator();
           }
         });
   }

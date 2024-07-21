@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
          WelcomeScreen.id: (context) => const WelcomeScreen() ,
          ChatScreen.id: (context) =>  ChatScreen() ,
       },
-      initialRoute: ChatScreen.id,
+      initialRoute: WelcomeScreen.id,
     );
     }
     }

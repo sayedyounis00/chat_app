@@ -1,10 +1,12 @@
 class MessageModel {
   final String message;
-  const MessageModel({required this.message});
+  final String id;
+  const MessageModel( {required this.message,required this.id,});
 
-  factory MessageModel.fromjson(json){
+  factory MessageModel.fromjson(json) {
     return MessageModel(
-      message:json['message'] ,
+      message: json['message'],
+      id:json['email'],
     );
   }
 }

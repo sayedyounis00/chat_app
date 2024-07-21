@@ -25,69 +25,71 @@ class RegisterScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/Images/loginImage.jpeg'),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CustomText(
-                          text: 'Register',
-                          // fontFamily: 'Aguafina',
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: kPrimeryColor),
-                    ],
-                  ),
-                  CustomTextFormField(
-                    onChange: (data) {
-                      name = data;
-                    },
-                    labelText: 'Name',
-                  ),
-                  CustomTextFormField(
-                    onChange: (data) {
-                      email = data;
-                    },
-                    labelText: 'Email',
-                  ),
-                  CustomTextFormField(
-                    onChange: (data) {
-                      password = data;
-                    },
-                    labelText: 'Password',
-                    obsecureText: true,
-                  ),
-                  CustomButton(
-                    buttonText: 'Register',
-                    buttonColor: kPrimeryColor,
-                    width: double.infinity,
-                    onPressed: () async {
-                      try {
-                        await userRegister();
-                          LoadingIndicator();
-                        if (context.mounted) {
-                          Navigator.pushNamed(context, ChatScreen.id);
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'email-already-in-use') {
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/Images/loginImage.jpeg'),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CustomText(
+                            text: 'Register',
+                            // fontFamily: 'Aguafina',
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: kPrimeryColor),
+                      ],
+                    ),
+                    CustomTextFormField(
+                      onChange: (data) {
+                        name = data;
+                      },
+                      labelText: 'Name',
+                    ),
+                    CustomTextFormField(
+                      onChange: (data) {
+                        email = data;
+                      },
+                      labelText: 'Email',
+                    ),
+                    CustomTextFormField(
+                      onChange: (data) {
+                        password = data;
+                      },
+                      labelText: 'Password',
+                      obsecureText: true,
+                    ),
+                    CustomButton(
+                      buttonText: 'Register',
+                      buttonColor: kPrimeryColor,
+                      width: double.infinity,
+                      onPressed: () async {
+                        try {
+                          await userRegister();
+                            LoadingIndicator();
                           if (context.mounted) {
-                            showSnackBar(context, 'email-already-in-use');
+                            Navigator.pushNamed(context, ChatScreen.id,arguments: email);
                           }
-                        } else if (e.code == 'weak-password') {
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'email-already-in-use') {
+                            if (context.mounted) {
+                              showSnackBar(context, 'email-already-in-use');
+                            }
+                          } else if (e.code == 'weak-password') {
+                            if (context.mounted) {
+                              showSnackBar(context, 'Weak password');
+                            }
+                          }
+                        } catch (e) {
                           if (context.mounted) {
-                            showSnackBar(context, 'Weak password');
+                            showSnackBar(context, 'Error try again');
                           }
                         }
-                      } catch (e) {
-                        if (context.mounted) {
-                          showSnackBar(context, 'Error try again');
-                        }
-                      }
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
