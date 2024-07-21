@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) =>  LoginScreen() ,
         RegisterScreen.id: (context) =>   RegisterScreen() ,
          WelcomeScreen.id: (context) => const WelcomeScreen() ,
-         ChatScreen.id: (context) => const ChatScreen() ,
+         ChatScreen.id: (context) =>  ChatScreen() ,
       },
-      initialRoute: LoginScreen.id,
+      initialRoute: ChatScreen.id,
     );
     }
     }
