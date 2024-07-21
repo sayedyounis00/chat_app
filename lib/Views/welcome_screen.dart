@@ -3,8 +3,12 @@ import 'package:whats_app/Widgets/custom_button.dart';
 import 'package:whats_app/Widgets/custom_text.dart';
 import 'package:whats_app/constants.dart';
 
-class WelcomePage extends StatelessWidget {
-  const WelcomePage({super.key});
+import 'login_screen.dart';
+import 'register_screen.dart';
+
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+  static String id = 'ًWelcomeScreen';
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class WelcomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/welcomeImage.png'),
+              Image.asset('assets/Images/welcomeImage.png'),
               const CustomText(
                 text: 'Hello',
                 fontSize: 30,
@@ -38,14 +42,20 @@ class WelcomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              const CustomButton(
+              CustomButton(
                 buttonText: 'Login',
                 buttonColor: kMessageColor,
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginScreen.id);
+                },
               ),
-              const CustomButton(
+              CustomButton(
                 buttonText: 'Register',
                 buttonColor: Colors.white,
-                TextColor: kMessageColor,
+                textColor: kMessageColor,
+                onPressed: () {
+                  Navigator.pushNamed(context, RegisterScreen.id);
+                },
               ),
             ],
           ),
