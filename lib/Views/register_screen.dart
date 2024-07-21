@@ -1,19 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:whats_app/Views/chat_screen.dart';
 import 'package:whats_app/Widgets/custom_button.dart';
 import 'package:whats_app/Widgets/custom_text.dart';
 import 'package:whats_app/Widgets/custom_text_form_feild.dart';
+import 'package:whats_app/Widgets/snack_bar.dart';
 import 'package:whats_app/constants.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({super.key});
   static String id = 'RegisterPage';
 
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> myKey = GlobalKey();
 
   String? name, email, password;
@@ -65,9 +62,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     buttonText: 'Register',
                     buttonColor: kPrimeryColor,
                     width: double.infinity,
-                    onPressed: () {
-                      if(myKey.currentState!.validate()){
-                        
+                    onPressed: () async {
+                      try {
+                        await userRegister();
+                          const Center(child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 300.0),
+                        child: CircularProgressIndicator(),
+                      ));
+                        if (context.mounted) {
+                          Navigator.pushNamed(context, ChatScreen.id);
+                        }
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'email-already-in-use') {
+                          if (context.mounted) {
+                            showSnackBar(context, 'email-already-in-use');
+                          }
+                        } else if (e.code == 'weak-password') {
+                          if (context.mounted) {
+                            showSnackBar(context, 'Weak password');
+                          }
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          showSnackBar(context, 'Error try again');
+                        }
                       }
                     },
                   ),

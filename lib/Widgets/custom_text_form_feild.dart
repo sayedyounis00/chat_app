@@ -18,12 +18,12 @@ class CustomTextFormField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: TextFormField(
         controller: TextEditingController(),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'this Feild is Required';
-          }
-          return null;
-        },
+        // validator: (value) {
+        //   if (value==null||value.isEmpty) {
+        //     return 'this Feild is Required';
+        //   }
+        //   return null;
+        // },
         onChanged: onChange,
         obscureText: obsecureText ?? false,
         decoration: InputDecoration(
