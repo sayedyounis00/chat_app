@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
@@ -8,9 +7,10 @@ class LoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 300.0),
-                            child: CircularProgressIndicator(),
-                          ));
+    return const Center(
+        child: Padding(
+      padding: EdgeInsets.symmetric(vertical: 300.0),
+      child: CircularProgressIndicator(),
+    ));
   }
 }
