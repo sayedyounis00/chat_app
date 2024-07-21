@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "887705126175",
+    "project_id": "whats-app-f709d",
+    "storage_bucket": "whats-app-f709d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887705126175:android:0ad2b06411f73d3648dc2a",
+        "android_client_info": {
+          "package_name": "com.example.whats_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjelykLSaitYPCEk2W4STa9G7amookEHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
