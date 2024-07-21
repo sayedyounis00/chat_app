@@ -19,12 +19,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       routes:{
-        LoginScreen.id: (context) => const LoginScreen() ,
+        LoginScreen.id: (context) =>  LoginScreen() ,
         RegisterScreen.id: (context) =>   RegisterScreen() ,
          WelcomeScreen.id: (context) => const WelcomeScreen() ,
          ChatScreen.id: (context) => const ChatScreen() ,
       },
-      initialRoute: RegisterScreen.id,
+      initialRoute: LoginScreen.id,
     );
     }
     }

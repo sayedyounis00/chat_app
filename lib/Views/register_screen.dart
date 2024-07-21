@@ -4,6 +4,7 @@ import 'package:whats_app/Views/chat_screen.dart';
 import 'package:whats_app/Widgets/custom_button.dart';
 import 'package:whats_app/Widgets/custom_text.dart';
 import 'package:whats_app/Widgets/custom_text_form_feild.dart';
+import 'package:whats_app/Widgets/loading_indicator.dart';
 import 'package:whats_app/Widgets/snack_bar.dart';
 import 'package:whats_app/constants.dart';
 
@@ -65,10 +66,7 @@ class RegisterScreen extends StatelessWidget {
                     onPressed: () async {
                       try {
                         await userRegister();
-                          const Center(child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 300.0),
-                        child: CircularProgressIndicator(),
-                      ));
+                          LoadingIndicator();
                         if (context.mounted) {
                           Navigator.pushNamed(context, ChatScreen.id);
                         }
